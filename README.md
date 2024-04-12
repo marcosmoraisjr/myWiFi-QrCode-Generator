@@ -19,7 +19,7 @@ Este é um projeto que consiste em um gerador de QR Code para configurações de
 As funções mais importantes são descritas abaixo:
 
 - Função para alternar a visibilidade da senha
-```javascript
+```html
 <div style="background-color: black; color: white; padding: 10px;">
         function togglePasswordVisibility() {
             var passwordField = document.getElementById('password');
