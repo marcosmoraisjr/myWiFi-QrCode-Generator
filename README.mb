@@ -1,0 +1,103 @@
+# Gerador de QR Code para Wi-Fi
+
+Este é um projeto que consiste em um gerador de QR Code para configurações de Wi-Fi. Com ele, você pode facilmente gerar um QR Code contendo as informações necessárias para conectar-se a uma rede Wi-Fi, como o nome da rede (SSID), tipo de segurança e senha.
+
+## Como usar
+
+1. **Preencha as informações**: No formulário fornecido, preencha o nome da rede (SSID) e selecione o tipo de segurança (WPA/WPA2, WEP ou sem senha).
+2. **Senha sugerida**: Ao preencher o campo SSID, uma senha sugerida será automaticamente gerada, baseada no nome da rede. Você pode usar essa senha sugerida ou inserir uma senha personalizada.
+3. **Gerar QR Code**: Clique no botão "Gerar QR Code" para criar o código QR com as informações fornecidas.
+4. **Conectar-se à rede**: Use um leitor de QR Code em seu dispositivo para escanear o código gerado e conectar-se à rede Wi-Fi automaticamente.
+
+## Recursos e Tecnologias
+
+- **HTML, CSS e JavaScript**: O projeto é desenvolvido utilizando tecnologias web padrão.
+- **Biblioteca qrcode-generator**: Utilizada para gerar o código QR de forma dinâmica.
+- **Bootstrap**: Framework CSS utilizado para estilização e responsividade.
+
+## QRCode / 2d Barcode API
+
+QRCode / 2d Barcode API pode ser explicada e traduzida da seguinte forma:
+
+** QRCode / 2D Barcode API: Refere-se a uma interface de programação de aplicativos (API) que permite a geração de códigos QR (Quick Response) e outros tipos de códigos de barras bidimensionais (2D).
+
+** with both server side and client side support: Significa que a API pode ser utilizada tanto no lado do servidor quanto no lado do cliente. Isso indica que a geração dos códigos pode ocorrer tanto no servidor (por exemplo, ao acessar uma URL específica) quanto no navegador do usuário, dependendo das necessidades do desenvolvedor.
+
+** using canvas: Indica que a API utiliza a tecnologia HTML5 Canvas para renderizar os códigos QR e de barras. O Canvas é uma parte da especificação HTML5 que permite a renderização de gráficos dinâmicos, como imagens, gráficos e animações, diretamente no navegador web.
+
+Traduzindo e explicando melhor:
+
+** "API para QRCode / Código de Barras 2D com suporte tanto no servidor quanto no cliente utilizando canvas."
+Essa tradução e explicação destacam que a API oferece suporte para gerar códigos QR e de barras 2D, podendo ser utilizada tanto no lado do servidor quanto no lado do cliente, e que utiliza a tecnologia canvas para renderização dos códigos.
+
+Mais informações em https://www.jsdelivr.com/package/npm/qrcode
+
+** Instalação
+Na sessão <head> do seu código insira: 
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/lib/browser.min.js"></script>
+
+
+ou se preferir...
+
+### QRCode / API de Código de Barras 2D
+
+[![Version](https://img.shields.io/badge/version-1.5.3-brightgreen)](https://github.com/soldair/node-qrcode/releases/tag/v1.5.3)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/soldair/node-qrcode/blob/master/LICENSE)
+
+Este é um repositório contendo uma API para geração de códigos QR (Quick Response) e códigos de barras 2D. A API oferece suporte tanto no lado do servidor quanto no lado do cliente, usando canvas para renderização.
+
+#### Instalação
+
+**Instalação estática:**
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/lib/browser.min.js"></script>
+```
+
+#### Destaques
+
+- Funciona no servidor e no cliente (incluindo React Native com SVG)
+- Utilitário de linha de comando (CLI)
+- Geração de código QR em formato de imagem
+- Suporte para Modo Numérico, Alfanumérico, Kanji e Byte
+- Suporte para modos mistos
+- Suporte para caracteres chineses, cirílicos, gregos e japoneses
+- Suporte para caracteres multibyte (como emojis 😊)
+- Gera automaticamente segmentos otimizados para melhor compressão de dados e menor tamanho de código QR
+- Leitura agnóstica de aplicativos, os códigos QR são, por definição, agnósticos de aplicativos
+
+#### Uso
+
+**CLI:**
+
+```bash
+qrcode "texto"       # Desenhar na janela do terminal
+qrcode -o out.png "texto"  # Salvar como imagem PNG
+```
+
+**No Navegador:**
+
+```javascript
+var canvas = document.getElementById('canvas');
+QRCode.toCanvas(canvas, 'texto', function (error) {
+  if (error) console.error(error);
+  console.log('Sucesso!');
+});
+```
+
+#### API
+
+Para mais detalhes sobre como usar a API, consulte [a documentação completa](https://github.com/soldair/node-qrcode).
+
+#### Licença
+
+Este projeto está licenciado sob a [Licença MIT](https://github.com/soldair/node-qrcode/blob/master/LICENSE).
+
+*A palavra "QR Code" é uma marca registrada da DENSO WAVE INCORPORATED.*
+
+
+## Como contribuir
+
+Este projeto está aberto para contribuições. Se você encontrar algum problema ou tiver sugestões de melhorias, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+

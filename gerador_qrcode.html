@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code para Wi-Fi</title>
+    <!-- Incluindo a biblioteca qrcode-generator 
+    https://www.jsdelivr.com/package/npm/qrcode
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4"></script>--> <!-- Versão alternativa da biblioteca qrcode -->
+    <!-- Incluindo o Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos CSS personalizados */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilos para ajustar o tamanho do painel */
+        .panel-container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 5px;
+            border-color: gray;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        #qrcodeContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            border-color: gray;
+            border-style: solid;
+            border-width: 1px;
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="panel-container">
+        <!-- Painel -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Gerador de QR Code para Wi-Fi</h3>
+            </div>
+            <div class="panel-body">
+                <!-- Formulário -->
+                <form id="wifiForm">
+                    <!-- Campo SSID -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">SSID</span>
+                        </div>
+                        <input type="text" id="ssid" name="ssid" class="form-control" placeholder="Nome da Rede (SSID)" aria-label="SSID" aria-describedby="basic-addon1" required onblur="fillPasswordField()">
+                    </div>
+
+                    <!-- Campo de seleção de segurança -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="security">Segurança</label>
+                        </div>
+                        <select id="security" name="security" class="form-select">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Sem senha (não recomendado)</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo de senha -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Senha</span>
+                        </div>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="basic-addon2">
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">👁️</button>
+                    </div>
+
+                    <!-- Checkbox para esconder SSID -->
+                    <label class="form-check-label" for="hidden">Esconder SSID</label>
+                    <input type="checkbox" id="hidden" name="hidden">
+                    <br /><br />
+
+                    <!-- Botões -->
+                    <input type="reset" class="btn btn-primary" value="Novo" />
+                    <button type="button" class="btn btn-primary" onclick="generateQRCode()">Gerar QR Code</button>
+                    <!--<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button type="button" class="btn btn-primary" onclick="generateQRCode()">Gerar QR Code</button>
+                        <input type="reset" class="btn btn-primary" value="Limpar" />
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Div para exibir o QR Code -->
+    <div id="qrcodeContainer">
+        <button type="button" class="btn-close" aria-label="Fechar" onclick="closeQRCode()"></button>
+        <div id="qrcode"></div>
+    </div>
+
+    <!--- sessão dos scripts js /-->
+    <script>
+        // Função para alternar a visibilidade da senha
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var toggleButton = document.querySelector('.btn-outline-secondary');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleButton.textContent = "👁️";
+            } else {
+                passwordField.type = "password";
+                toggleButton.textContent = "🔒";
+            }
+        }
+
+        // Função para gerar a senha sugerida
+        function generateSuggestedPassword() {
+            var suggestedPassword = "";
+            var password = document.getElementById('password');
+            var security = document.getElementById('security').value;
+
+            // Verifica o tipo de segurança e gera a senha sugerida conforme os critérios
+            if (security === "WPA") {
+                var ssid = document.getElementById('ssid').value.toLowerCase();
+                var characters = "aeiou_";
+                var replacements = "4310v@$";
+
+                for (var i = 0; i < ssid.length; i++) {
+                    var char = ssid.charAt(i);
+                    var index = characters.indexOf(char.toLowerCase());
+                    suggestedPassword += index !== -1 ? replacements[index] : char;
+                }
+            } else if (security === "WEP") {
+                // Implemente a lógica para WEP, se necessário
+            } else if (security === "nopass") {
+                // Implemente a lógica para redes sem senha, se necessário
+            }
+
+            return suggestedPassword;
+        }
+
+        // Função para preencher o campo de senha com a sugestão calculada ao sair do campo SSID
+        function fillPasswordField() {
+            var suggestedPassword = generateSuggestedPassword();
+            var passwordField = document.getElementById('password');
+            passwordField.value = suggestedPassword;
+        }
+
+        // Função para gerar o QR Code
+        function generateQRCode() {
+            var ssid = document.getElementById('ssid').value.trim();
+            var security = document.getElementById('security').value;
+            var password = document.getElementById('password').value.trim();
+            var hidden = document.getElementById('hidden').checked;
+
+            // Restante do seu código para gerar o QR Code
+            // Construção dos dados para o QR Code
+            var wifiData = `WIFI:S:${ssid};T:${security};P:${password};${hidden ? 'H:true;' : ''};`;
+
+            // Configuração do QR Code
+            var typeNumber = 4;
+            var errorCorrectionLevel = 'L';
+            var qr = qrcode(typeNumber, errorCorrectionLevel);
+            qr.addData(wifiData);
+            qr.make();
+
+            // Exibição do QR Code
+            document.getElementById('qrcode').innerHTML = qr.createImgTag(6); // Alterado o parâmetro de tamanho para 5
+
+            // Mostrar a caixa flutuante
+            document.getElementById('qrcodeContainer').style.display = 'block';
+        }
+
+        // Função para fechar o QR Code
+        function closeQRCode() {
+            // Ocultar a caixa flutuante
+            document.getElementById('qrcodeContainer').style.display = 'none';
+        }
+    </script>
+
+    <!-- Incluindo o Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
