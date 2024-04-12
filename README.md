@@ -20,6 +20,7 @@ As funções mais importantes são descritas abaixo:
 
 - Função para alternar a visibilidade da senha
 ```javascript
+<div style="background-color: black; color: white; padding: 10px;">
         function togglePasswordVisibility() {
             var passwordField = document.getElementById('password');
             var toggleButton = document.querySelector('.btn-outline-secondary');
@@ -31,6 +32,7 @@ As funções mais importantes são descritas abaixo:
                 toggleButton.textContent = "🔒";
             }
         }
+</div>
 ```
 - Função para gerar a senha sugerida
 ```javascript
